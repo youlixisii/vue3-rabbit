@@ -1,4 +1,18 @@
-<script setup></script>
+<script setup>
+import {getCategoryAPI} from '@/apis/layout'
+import { onMounted,ref } from 'vue';
+
+const categoryList=ref([])
+const getCategory=async ()=>{
+  const res=await getCategoryAPI()
+  console.log(res);
+  categoryList.value=res.result;
+}
+
+onMounted(()=>{
+  getCategory() //接口发起
+})
+</script>
 
 <template>
   <header class="app-header">
@@ -10,10 +24,11 @@
       </h1>
       <!-- 右侧导航区 -->
       <ul class="app-header-nav">
-        <li class="home"><RouterLink to="/">首页</RouterLink></li>
-        <li><RouterLink to="/">居家</RouterLink></li>
-        <li><RouterLink to="/">美食</RouterLink></li>
-        <li><RouterLink to="/">服饰</RouterLink></li>
+        <!-- 渲染，RouterLink组件替代a标签，渲染后实际上是a标签 -->
+        <li class="home" v-for="item in categoryList" :key="item.id">
+          <!-- 插值语法 -->
+          <RouterLink to="/">{{ item.name }}</RouterLink>
+        </li>
       </ul>
       <!-- 搜索框 -->
       <div class="search">
@@ -23,8 +38,8 @@
       <!-- 购物车 -->
       <div class="class">
         <div class="curr">
-          <i class="icon-cart"></i>
-          <em>3</em>
+          <i class="iconfont icon-cart"></i>
+          <em>0</em>
         </div>
       </div>
 
@@ -37,7 +52,7 @@
     background: #fff;
   }
   .container{
-    display: flex; //开启弹性布局
+    display: flex; //开启弹性布局，让里面的一个个div横向排列
     align-items: center; //垂直居中
   }
   .logo{
@@ -110,18 +125,21 @@
   .cart{
     width: 50px;
 
+    //内部的样式
     .curr{
       height: 32px;
-      line-height: 32px;
-      text-align: center;
-      position: relative;
-      display: block;
+      line-height: 32px; //垂直居中
+      text-align: center; //水平居中
+      position: relative; //作为定位上下文，方便em挂在右上角
+      display: block; //让icon和em是一个整体
 
 
       .icon-cart{
         font-size: 22px;
       }
 
+      //绝对定位的参照物是最近的定位父元素（relative/absolute/fixed），
+      //所以 .curr 必须是一个 完整的矩形区域，才能作为 em 的定位基准
       em{
         font-style: normal; //取消斜体
         position: absolute; //绝对定位
