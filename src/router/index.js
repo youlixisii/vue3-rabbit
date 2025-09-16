@@ -10,12 +10,12 @@ const router = createRouter({
   routes: [
     {
       path:'/',
-      component:Layout,
+      component:Layout, //一级路由渲染 Layout.vue
       // 二级路由
       children:[
         {
-          path:'',
-          component:Home
+          path:'', //默认二级路由
+          component:Home //在 Layout 里的 RouterView 位置显示 Home.vue
         },
         {
           path:'category',
@@ -24,7 +24,7 @@ const router = createRouter({
       ]
     },
     {
-      path:'/Login',
+      path:'/Login', // 单独的一级路由
       component:Login
     },
   ],
