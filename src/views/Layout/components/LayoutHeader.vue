@@ -1,17 +1,6 @@
 <script setup>
-import {getCategoryAPI} from '@/apis/layout'
-import { onMounted,ref } from 'vue';
-
-const categoryList=ref([])
-const getCategory=async ()=>{
-  const res=await getCategoryAPI()
-  console.log(res);
-  categoryList.value=res.result;
-}
-
-onMounted(()=>{
-  getCategory() //接口发起
-})
+import { useCategoryStore } from '@/stores/category';
+const categoryStore=useCategoryStore()
 </script>
 
 <template>
@@ -24,8 +13,11 @@ onMounted(()=>{
       </h1>
       <!-- 右侧导航区 -->
       <ul class="app-header-nav">
+        <li class="home">
+          <RouterLink to="/">首页</RouterLink>
+        </li>
         <!-- 渲染，RouterLink组件替代a标签，渲染后实际上是a标签 -->
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <!-- 插值语法 -->
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
