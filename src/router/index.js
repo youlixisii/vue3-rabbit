@@ -18,7 +18,7 @@ const router = createRouter({
           component:Home //在 Layout 里的 RouterView 位置显示 Home.vue
         },
         {
-          path:'category',
+          path:'category/:id',
           component:Category
         },
       ]

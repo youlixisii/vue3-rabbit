@@ -19,7 +19,7 @@ const categoryStore=useCategoryStore()
         <!-- 渲染，RouterLink组件替代a标签，渲染后实际上是a标签 -->
         <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <!-- 插值语法 -->
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <!-- 搜索框 -->
