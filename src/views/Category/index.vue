@@ -2,6 +2,7 @@
 import { getCategoryAPI } from '@/apis/category'
 import {onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
+import {getBannerAPI} from'@/apis/home'
 
 const categoryData = ref({})
 const route = useRoute() //路由参数
@@ -10,6 +11,15 @@ const getCategory = async () => {
   categoryData.value = res.result
 }
 onMounted(()=>getCategory())
+
+// 获取banner
+const bannerList=ref([])
+const getBanner=async ()=>{
+  const res=await getBannerAPI({distributionSite:'2'})
+  console.log(res);
+  bannerList.value=res.result
+}
+onMounted(()=> getBanner())
 </script>
 
 <template>
@@ -21,6 +31,17 @@ onMounted(()=>getCategory())
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <!-- element plus提供的轮播图组件，固定高度为 500px -->
+        <el-carousel height="500px">
+          <!-- v-for 循环生成 4 个轮播项 -->
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <!-- 每个轮播项里放一张相同的图片（可以改成动态数据） -->
+            <img :src="item.imgUrl" alt="banner">
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>
@@ -103,6 +124,23 @@ onMounted(()=>getCategory())
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+
+.home-banner {
+  /* 整个轮播图容器宽度固定为 1240px，高度 500px */
+  width: 1240px;
+  height: 500px;
+
+  margin: 0 auto;
+
+  /* 轮播里的图片样式 */
+  img {
+    /* 图片宽度铺满容器 */
+    width: 100%;
+
+    /* 图片高度固定 500px，和轮播容器高度一致 */
+    height: 500px;
   }
 }
 </style>
