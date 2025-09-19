@@ -15,10 +15,12 @@ onMounted(()=>categoryStore.getCategory())
 <template>
   <div>
 
-    <!-- 二级路由出口 -->
+
     <LayoutFixed />
     <LayoutNav />
     <LayoutHeader />
+    <!-- 二级路由出口 -->
+    <!-- 破坏缓存，强制复用实例 -->
     <RouterView />
     <LayoutFooter />
 
