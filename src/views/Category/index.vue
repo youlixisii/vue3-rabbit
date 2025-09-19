@@ -3,6 +3,8 @@ import { getCategoryAPI } from '@/apis/category'
 import {onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {getBannerAPI} from'@/apis/home'
+import Goodsitem from '../Home/components/Goodsitem.vue'
+
 
 const categoryData = ref({})
 const route = useRoute() //路由参数
@@ -42,6 +44,30 @@ onMounted(()=> getBanner())
             <img :src="item.imgUrl" alt="banner">
           </el-carousel-item>
         </el-carousel>
+      </div>
+      <!-- 分类菜单 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <!-- 具体分类 -->
+      <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+        <div class="head">
+          <!-- 分类名字 -->
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <!-- 当前分类下的商品数组 -->
+          <!-- 因为item.goods是商品数组，每次取出的就是单个商品对象，用单数更直观 -->
+          <Goodsitem v-for="good in item.goods" :goods="good" :key="good.id" />
+        </div>
       </div>
     </div>
   </div>

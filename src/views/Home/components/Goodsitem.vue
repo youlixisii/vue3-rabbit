@@ -1,4 +1,6 @@
 <script setup>
+//声明父组件传入的参数
+//父组件通过 :goods="item" 传入数据，子组件内部就能直接用 goods.xxx
 defineProps({
   goods:{
     type:Object,
