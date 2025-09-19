@@ -1,33 +1,13 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/category'
-import {onMounted, ref} from 'vue'
-import {useRoute} from 'vue-router'
-import {getBannerAPI} from'@/apis/home'
 import Goodsitem from '../Home/components/Goodsitem.vue'
-import { onBeforeRouteUpdate } from 'vue-router'
+import {useBanner} from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
 
-//获取数据
-const categoryData = ref({})
-const route = useRoute() //路由参数
-const getCategory = async (id = route.params.id) => {
-  const res = await getCategoryAPI(id)
-  categoryData.value = res.result
-}
-onMounted(()=>getCategory())
+const {bannerList}=useBanner()
+const {categoryData} =useCategory()
 
-//路由参数变化时重新发送
-onBeforeRouteUpdate((to)=>{
-  getCategory(to.params.id)
-})
 
-// 获取banner
-const bannerList=ref([])
-const getBanner=async ()=>{
-  const res=await getBannerAPI({distributionSite:'2'})
-  console.log(res);
-  bannerList.value=res.result
-}
-onMounted(()=> getBanner())
+
 </script>
 
 <template>
@@ -56,7 +36,8 @@ onMounted(()=> getBanner())
         <h3>全部分类</h3>
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
-            <RouterLink to="/">
+            <!-- 点击全部分类下的图标，跳转到对应二级分类 -->
+            <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
