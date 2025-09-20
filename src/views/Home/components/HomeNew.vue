@@ -14,8 +14,10 @@ onMounted(()=>getNewList())
 <template>
   <HomePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
     <ul class="goods-list">
+      <!-- 遍历一个接口拿取的数据 -->
     <li v-for="item in newList" :key="item.id">
-      <RouterLink to="/">
+      <!-- 点进去跳到商品详情页 -->
+      <RouterLink :to="`/detail/${item.id}`">
         <img :src="item.picture" alt="" />
         <p class="name">{{ item.name }}</p>
         <p class="price">&yen;{{ item.price }}</p>
