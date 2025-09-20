@@ -13,13 +13,13 @@ const getCategoryData= async ()=>{
 }
 onMounted(()=>getCategoryData())
 
-//基础列表数据
+//基础列表数据获取
 const goodList=ref([])
 const reqData=ref({
   categoryId:route.params.id,
   page:1,
   pageSize:20,
-  sortField:'publishTime'
+  sortField:'publishTime' //控制排序方式的属性
 })
 const getGoodList =async ()=>{
   const res=await getSubCategoryAPI(reqData.value)
@@ -29,6 +29,24 @@ const getGoodList =async ()=>{
 }
 onMounted(()=>getGoodList())
 
+//商品排列方式切换（人气/评论/最新）
+//点击后重新请求
+const tabChange=()=>{
+  reqData.value.page=1  //重新分页
+  getGoodList()
+}
+
+//无限加载
+const disabled=ref(false)
+const load=async ()=>{
+  reqData.value.page++
+  const res=await getSubCategoryAPI(reqData.value)
+  goodList.value=[...goodList.value,...res.result.items]
+  //加载完停止监听
+  if(res.result.items.length===0){
+    disabled.value=true
+  }
+}
 </script>
 
 <template>
@@ -46,12 +64,13 @@ onMounted(()=>getGoodList())
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <!-- 双向绑定，点击后重新请求数据 -->
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
           <!-- 商品列表-->
         <Goodsitem v-for="good in goodList" :goods="good" :key="good.id" />
       </div>
