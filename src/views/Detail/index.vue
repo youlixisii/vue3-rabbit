@@ -4,6 +4,7 @@ import {onMounted, ref} from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
 import ImageView from '@/components/ImageView/index.vue'
+import XtxSku from '@/components/XtxSku/index.vue'
 
 //获取商品详情页数据
 const goods=ref({})
@@ -13,6 +14,12 @@ const getGoods=async()=>{
   goods.value=res.result
 }
 onMounted(()=>getGoods())
+
+//sku规格被操作时有无获取数据
+const skuChange=(sku)=>{
+  console.log(sku);
+
+}
 </script>
 
 <template>
@@ -91,7 +98,7 @@ onMounted(()=>getGoods())
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" @change="skuChange"/>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
