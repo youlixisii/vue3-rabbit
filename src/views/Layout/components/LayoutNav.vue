@@ -5,7 +5,7 @@
     <div class="container">
       <ul>
         <!-- 已登录分支的导航项 -->
-        <template v-if="true">
+        <template v-if="false">
           <!-- i是在文字旁边显示一个图标，js;代表不执行东西 -->
           <!-- 就是显示用户头像+用户名用的 -->
           <li><a href="javascript:;"><i class="iconfont icon-user"></i>karina</a></li>
@@ -23,7 +23,7 @@
         </template>
         <!-- 未登录分支的导航项 -->
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <li><a href="javascript:;" @click="$router.push('/login')">请先登录</a></li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>

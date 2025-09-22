@@ -34,7 +34,7 @@ const router = createRouter({
       ]
     },
     {
-      path:'/Login', // 单独的一级路由
+      path:'/login', // 单独的一级路由
       component:Login
     },
   ],
