@@ -1,7 +1,17 @@
 <script setup>
 import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
 const userStore=useUserStore() //用户登录数据
+const router=useRouter()
 
+//退出登录逻辑
+const confirm = ()=>{
+  console.log('退出登录');
+  //清除用户信息
+  userStore.clearUserInfo()
+  //跳转到登录页
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -17,7 +27,7 @@ const userStore=useUserStore() //用户登录数据
             {{ userStore.userInfo.account }}</a></li>
           <li>
             <!-- elementplus提供的一个确认弹窗组件 -->
-            <el-popconfirm title="确认退出吗？" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm @confirm="confirm" title="确认退出吗？" confirm-button-text="确认" cancel-button-text="取消">
               <!-- 插槽语法slot，触发弹窗的东西就是这个 -->
               <template #reference>
                 <a href="javascript:;">退出登录</a>

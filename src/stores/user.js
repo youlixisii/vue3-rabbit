@@ -12,9 +12,14 @@ export const useUserStore = defineStore('user',()=>{
     const res = await loginAPI({account,password})
     userInfo.value = res.result  // 将接口返回的数据存到状态里
   }
+  //退出时清除用户信息
+  const clearUserInfo = () =>{
+    userInfo.value={}
+  }
   //3.返回 state 和 action —— 这样在组件里就可以通过 useUserStore() 来使用 userInfo 和 getUserInfo
-  return {userInfo,getUserInfo}
+  return {userInfo,getUserInfo,clearUserInfo}
 },{
+  //持久化存储
   persist:true,
 }
 )
