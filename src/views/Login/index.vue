@@ -1,9 +1,11 @@
 <script setup>
 import {ref} from 'vue'
-import {loginAPI} from '@/apis/user'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router'
+import {useUserStore} from '@/stores/user'
+
+const userStore = useUserStore()
 
 //表单校验，账户名和密码
 //1.准备表单对象并绑定
@@ -53,6 +55,7 @@ const rules={
 const formRef=ref(null)
 const router=useRouter()
 const doLogin=()=>{
+  //获取用户输入的账号和密码
   const {account,password} =form.value
   //调用实例方法
   formRef.value.validate(async (valid)=>{
@@ -60,8 +63,7 @@ const doLogin=()=>{
     console.log(valid);
     if(valid){
       try {
-        const res = await loginAPI({ account, password })
-        console.log('登录成功', res)
+        userStore.getUserInfo({account,password})
         //弹出小窗口提示用户
         ElMessage({type:'success',message:'登陆成功'})
         //跳转到首页

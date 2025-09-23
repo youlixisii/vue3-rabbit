@@ -4,60 +4,60 @@ import Mock from 'mockjs'
 
 //轮播图，带参数
 //用正则 /\/home\/banner/ 拦截带参数的请求，根据参数返回不同的数据
-Mock.mock(/\/home\/banner/,'get',(options)=>{
+// Mock.mock(/\/home\/banner/,'get',(options)=>{
 
-    const url = new URL(options.url, window.location.origin)
-  const distributionSite = url.searchParams.get('distributionSite') || '1'
+//     const url = new URL(options.url, window.location.origin)
+//   const distributionSite = url.searchParams.get('distributionSite') || '1'
 
-  console.log('轮播图请求参数:', distributionSite)
+//   console.log('轮播图请求参数:', distributionSite)
 
-  if (distributionSite === '1') {
-    return {
-      code: "1",
-      msg: "操作成功",
-      result: [
-        {
-          id: "16",
-          imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/dfc11bb0-4af5-4e9b-9458-99f615cc685a.jpg",
-          hrefUrl: "/category/1005000",
-          type: "1"
-        },
-        {
-          id: "18",
-          imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/1ba86bcc-ae71-42a3-bc3e-37b662f7f07e.jpg",
-          hrefUrl: "/category/1013001",
-          type: "1"
-        }
-      ]
-    }
-  } else if (distributionSite === '2') {
-    return {
-      code: "1",
-      msg: "操作成功",
-      result: [
-        {
-          id: "19",
-          imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/6d202d8e-bb47-4f92-9523-f32ab65754f4.jpg",
-          hrefUrl: "/category/1013001",
-          type: "2"
-        },
-        {
-          id: "20",
-          imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/e83efb1b-309c-46f7-98a3-f1fefa694338.jpg",
-          hrefUrl: "/category/1005000",
-          type: "2"
-        }
-      ]
-    }
-  } else {
-    return {
-      code: "1",
-      msg: "操作成功",
-      result: []
-    }
-  }
+//   if (distributionSite === '1') {
+//     return {
+//       code: "1",
+//       msg: "操作成功",
+//       result: [
+//         {
+//           id: "16",
+//           imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/dfc11bb0-4af5-4e9b-9458-99f615cc685a.jpg",
+//           hrefUrl: "/category/1005000",
+//           type: "1"
+//         },
+//         {
+//           id: "18",
+//           imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/1ba86bcc-ae71-42a3-bc3e-37b662f7f07e.jpg",
+//           hrefUrl: "/category/1013001",
+//           type: "1"
+//         }
+//       ]
+//     }
+//   } else if (distributionSite === '2') {
+//     return {
+//       code: "1",
+//       msg: "操作成功",
+//       result: [
+//         {
+//           id: "19",
+//           imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/6d202d8e-bb47-4f92-9523-f32ab65754f4.jpg",
+//           hrefUrl: "/category/1013001",
+//           type: "2"
+//         },
+//         {
+//           id: "20",
+//           imgUrl: "http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/e83efb1b-309c-46f7-98a3-f1fefa694338.jpg",
+//           hrefUrl: "/category/1005000",
+//           type: "2"
+//         }
+//       ]
+//     }
+//   } else {
+//     return {
+//       code: "1",
+//       msg: "操作成功",
+//       result: []
+//     }
+//   }
 
-})
+// })
 
 //新鲜好物
 Mock.mock('/mock/home/new','get',{
