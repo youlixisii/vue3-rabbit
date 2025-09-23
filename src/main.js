@@ -4,6 +4,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import '@/styles/common.scss'  //引入样式
+import './mock'
+
 
 //懒加载组件并注册
 import {lazyPlugin} from '@/directives'

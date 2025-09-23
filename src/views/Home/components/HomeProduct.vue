@@ -1,3 +1,5 @@
+<!-- 首页最下商品页 -->
+
 <script setup>
 import HomePanel from './HomePanel.vue'
 import { getGoodsAPI } from '@/apis/home';
@@ -18,9 +20,10 @@ onMounted(()=>getGoods())
     <HomePanel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">
       <div class="box">
         <RouterLink class="cover" to="/">
+          <!-- 懒加载 -->
           <img v-img-lazy="cate.picture" />
           <strong class="label">
-            <span>{{ cate.name }}馆</span>
+            <span>{{ cate.name }}</span>
             <span>{{ cate.saleInfo }}</span>
           </strong>
         </RouterLink>

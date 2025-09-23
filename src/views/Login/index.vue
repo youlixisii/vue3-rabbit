@@ -1,12 +1,17 @@
 <script setup>
 import {ref} from 'vue'
+import {loginAPI} from '@/apis/user'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useRouter } from 'vue-router'
 
 //表单校验，账户名和密码
 //1.准备表单对象并绑定
 const form=ref({
   //初始值为空字符串
   account:'',
-  password:''
+  password:'',
+  agree:true
 })
 
 //2.准备规则对象并绑定
@@ -22,8 +27,54 @@ const rules={
     {required:true, message:'密码不能为空', trigger:'blur'},
     //长度限制规则
     {min:6,max:14, message:'密码长度为6-14个字符', trigger:'blur'},
+  ],
+  agree:[
+    {
+      //这是 Element Plus 支持的自定义验证函数属性
+      //value → 当前表单字段的值（这里就是 form.agree 的布尔值，勾选 → true，未勾选 → false）
+      //callback → 调用它来通知 Element Plus 验证结果：//callback() → 验证通过
+      //callback(new Error('提示信息')) → 验证不通过，显示错误信息
+
+      validator:(rule,value,callback)=>{
+        //自定义校验逻辑
+        //勾选就通过，不勾选就不通过
+        if(value){
+          callback() // 勾选了，通过验证
+        }else{
+          callback(new Error('请勾选协议')) // 未勾选，验证失败
+        }
+    }
+  }
   ]
 }
+
+// 获取form实例做统一校验
+// Element Plus 遍历表单下的所有 <el-form-item>，找到对应的规则
+const formRef=ref(null)
+const router=useRouter()
+const doLogin=()=>{
+  const {account,password} =form.value
+  //调用实例方法
+  formRef.value.validate(async (valid)=>{
+    //valid:所有表单通过校验才为true
+    console.log(valid);
+    if(valid){
+      try {
+        const res = await loginAPI({ account, password })
+        console.log('登录成功', res)
+        //弹出小窗口提示用户
+        ElMessage({type:'success',message:'登陆成功'})
+        //跳转到首页
+        router.replace({path:'/'})
+
+      } catch(err) {
+      console.error('登录失败', err.message)
+      }
+
+    }
+  })
+}
+
 </script>
 
 
@@ -51,7 +102,7 @@ const rules={
           <div class="form">
             <!-- 绑定表单对象和规则对象 -->
             <!-- label-position="right" → 标签显示在右边；status-icon → 显示验证状态图标（勾、叉）-->
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px"
               status-icon>
               <!-- 账户 -->
               <!-- prop="account" → 当前表单项对应的字段名，用于校验时定位到 form.account
@@ -64,12 +115,14 @@ const rules={
                 <el-input v-model="form.password" />
               </el-form-item>
               <!-- 复选框 -->
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
+              <!-- 绑定自定义表单校验 -->
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox  size="large" v-model="form.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <!-- @click="doLogin" -->
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-//一个 封装好的请求函数
+//url:'/home/category/head'
 import {getCategoryAPI} from '@/apis/layout'
 
 //store组合式写法

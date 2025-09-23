@@ -4,6 +4,7 @@ import {onMounted, ref} from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
 
+
 //获取商品详情页数据
 const goods=ref({})
 const route=useRoute()

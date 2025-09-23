@@ -1,0 +1,5 @@
+import './layout'
+import './home'
+import './user'
+import './category'
+import './detail'
