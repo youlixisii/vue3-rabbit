@@ -1,14 +1,20 @@
-<script setup></script>
+<script setup>
+import { useUserStore } from '@/stores/user';
+const userStore=useUserStore() //用户登录数据
+
+</script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
         <!-- 已登录分支的导航项 -->
-        <template v-if="false">
+        <!-- 根据token来显示不同页面 -->
+        <template v-if="userStore.userInfo.token">
           <!-- i是在文字旁边显示一个图标，js;代表不执行东西 -->
           <!-- 就是显示用户头像+用户名用的 -->
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>karina</a></li>
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>
+            {{ userStore.userInfo.account }}</a></li>
           <li>
             <!-- elementplus提供的一个确认弹窗组件 -->
             <el-popconfirm title="确认退出吗？" confirm-button-text="确认" cancel-button-text="取消">

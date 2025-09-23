@@ -11,8 +11,8 @@ const userStore = useUserStore()
 //1.准备表单对象并绑定
 const form=ref({
   //初始值为空字符串
-  account:'',
-  password:'',
+  account:'xiaotuxian001',
+  password:'123456',
   agree:true
 })
 
