@@ -14,4 +14,7 @@ export const useUserStore = defineStore('user',()=>{
   }
   //3.返回 state 和 action —— 这样在组件里就可以通过 useUserStore() 来使用 userInfo 和 getUserInfo
   return {userInfo,getUserInfo}
-})
+},{
+  persist:true,
+}
+)
