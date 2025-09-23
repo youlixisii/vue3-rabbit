@@ -13,9 +13,11 @@ export const useCartStore = defineStore('cart',()=>{
     //[1, 2, 3, 4].find(num => num > 2) // 返回 3
     //[1, 2, 3, 4].find(num => num > 5) // 返回 undefined
     const item = cartList.value.find((item)=>goods.skuId === item.skuId)
-    //如果该商品已被添加过，则数量加1
+    //如果该商品已被添加过，则数量加对应的数字
     if(item){
-      item.count++
+      // console.log('+',goods.count);
+      //goods是传进来的，item是goodlist里已有的
+      item.count+=goods.count
     }else{
       //没有被添加过则往里加这个商品
       cartList.value.push(goods)

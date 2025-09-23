@@ -128,7 +128,7 @@ const addCart = ()=>{
               </div>
               <!-- sku，商品规格 -->
               <XtxSku :goods="goods" @change="skuChange"/>
-              <!-- 商品数量 -->
+              <!-- 商品数量调整按钮 -->
               <el-input-number v-model="count" @change="countChange" />
               <!-- 按钮组件 -->
               <div>
