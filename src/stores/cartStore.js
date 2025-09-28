@@ -50,11 +50,29 @@ export const useCartStore = defineStore('cart',()=>{
   const allCount = computed(()=>cartList.value.reduce((a, c)=> a + c.count,0))
   const allPrice = computed(()=>cartList.value.reduce((a, c)=> a + c.count * c.price,0))
 
+  //已选择数量
+  const selectedCount=computed(()=>cartList.value.filter(item=>item.selected)
+  .reduce((a, c)=> a + c.count,0))
+  const selectedPrice=computed(()=>cartList.value.filter(item=>item.selected)
+  .reduce((a, c)=> a + c.count*c.price,0))
+
+  //已选商品合计
+
   //购物车是否全选
   //every方法
   const isAll=computed(()=>cartList.value.every((item)=>item.selected))
 
-  return {cartList,addCart,delCart,allCount,allPrice,singleCheck,isAll,allCheck}
+  return {
+    cartList,
+    addCart,
+    delCart,
+    allCount,
+    allPrice,
+    selectedCount,
+    selectedPrice,
+    singleCheck,
+    isAll,
+    allCheck}
 },{
   //开启持久化存储，存到本地
   persist:true,
