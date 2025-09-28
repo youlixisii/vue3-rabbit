@@ -55,7 +55,10 @@ export const useCartStore = defineStore('cart',()=>{
     }
   }
 
-
+  //清除购物车
+  const clearCart=()=>{
+    cartList.value=[]
+  }
 
 
   //购物车单选框改变store商品状态
@@ -97,6 +100,7 @@ export const useCartStore = defineStore('cart',()=>{
     allPrice,
     selectedCount,
     selectedPrice,
+    clearCart,
     singleCheck,
     isAll,
     allCheck}
