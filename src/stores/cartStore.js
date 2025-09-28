@@ -1,23 +1,29 @@
 //购物车
 import { defineStore } from "pinia";
 import {ref,computed} from 'vue'
-import { useUserStore } from "./user";
-import { insertCartAPI,findNewCartListAPI } from "@/apis/cart";
+import { useUserStore } from "./userStore";
+import { insertCartAPI,findNewCartListAPI,delCartAPI } from "@/apis/cart";
 
 export const useCartStore = defineStore('cart',()=>{
   //state，响应式数组对象
   const userStore=useUserStore()
   const isLogin=computed(()=>userStore.userInfo.token)
   const cartList = ref([])
+
+  //获取最新购物车列表
+  const updateNewList=async ()=>{
+    const res=await findNewCartListAPI()
+      //覆盖本地购物车列表
+      cartList.value=res.result
+  }
+
   //添加购物车操作，action
   const addCart = async (goods)=>{
     const {skuId,count}=goods
     //登录后的购物车逻辑
     if(isLogin.value){
       await insertCartAPI({skuId,count})
-      const res=await findNewCartListAPI()
-      //覆盖本地购物车列表
-      cartList.value=res.result
+      updateNewList()
     }else{
       //找cartList里面有没有被添加过，通过id来找
       //.find(callback) 数组方法，用来找数组里 符合条件的第一个元素。
@@ -38,11 +44,19 @@ export const useCartStore = defineStore('cart',()=>{
 }
 
   //删除购物车
-  const delCart=(skuId)=>{
-    //返回一个下标值
+  const delCart = async (skuId)=>{
+    if(isLogin.value){
+      await delCartAPI([skuId])
+      updateNewList()
+    }else{
+      //返回一个下标值
     const idx=cartList.value.findIndex((item)=>skuId===item.skuId)
     cartList.value.splice(idx,1)
+    }
   }
+
+
+
 
   //购物车单选框改变store商品状态
   const singleCheck=(skuId,selected)=>{
