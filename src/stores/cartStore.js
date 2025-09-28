@@ -103,7 +103,9 @@ export const useCartStore = defineStore('cart',()=>{
     clearCart,
     singleCheck,
     isAll,
-    allCheck}
+    allCheck,
+    updateNewList
+}
 },{
   //开启持久化存储，存到本地
   persist:true,
