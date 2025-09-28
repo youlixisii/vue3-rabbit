@@ -31,11 +31,30 @@ export const useCartStore = defineStore('cart',()=>{
     cartList.value.splice(idx,1)
   }
 
+  //购物车单选框改变store商品状态
+  const singleCheck=(skuId,selected)=>{
+    // item指的是数组中的每一个元素，find会返回第一个满足条件的元素
+    const item = cartList.value.find((item)=>item.skuId === skuId)
+    // 修改商品状态
+    item.selected=selected
+  }
+
+  //全选功能
+  const allCheck=(selected)=>{
+    //点击全选按钮，下面的商品状态改变
+    cartList.value.forEach(item=>item.selected=selected)
+
+  }
+
   //计算购物车
   const allCount = computed(()=>cartList.value.reduce((a, c)=> a + c.count,0))
   const allPrice = computed(()=>cartList.value.reduce((a, c)=> a + c.count * c.price,0))
 
-  return {cartList,addCart,delCart,allCount,allPrice}
+  //购物车是否全选
+  //every方法
+  const isAll=computed(()=>cartList.value.every((item)=>item.selected))
+
+  return {cartList,addCart,delCart,allCount,allPrice,singleCheck,isAll,allCheck}
 },{
   //开启持久化存储，存到本地
   persist:true,
