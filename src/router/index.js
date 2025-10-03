@@ -14,6 +14,7 @@ import Detail from '@/views/Detail/index.vue'
 import CartList from '@/views/CartList/index.vue'
 import Checkout from '@/views/Checkout/index.vue'
 import Pay from '@/views/Pay/index.vue'
+import PayBack from '@/views/Pay/PayBack.vue'
 
 //2.创建路由器  调用createRouter
 //路由器里面管理一个个路由，所以是routes，它是一个数组[]，而路由又是一个个对应关系，所以写{}
@@ -61,6 +62,10 @@ const router = createRouter({
         {
           path:'pay',
           component:Pay
+        },
+        {
+          path:'paycallback',
+          component:PayBack
         }
       ]
     },
